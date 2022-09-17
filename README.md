@@ -1,4 +1,6 @@
-## Стартовая конфигурация файлов для проекта на Django REST Framework
+# Anstore
+
+### API для онлайн-магазина на Django REST Framework
 
 
 <div>
@@ -6,7 +8,3 @@
     <img src="https://github.com/devicons/devicon/blob/master/icons/postgresql/postgresql-original-wordmark.svg" width="60" height="60"/>&nbsp;
 <div>
 
-
-> python -m venv venv
-
-> pip install -r req.txt
