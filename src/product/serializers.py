@@ -2,25 +2,14 @@ from rest_framework import serializers
 from .models import *
 
 
-class ProductListSerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Product
-        fields = ('title', 'price', 'category')
+        model = Category
+        fields = ('title',)
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
     class Meta:
         model = Product
-        exclude = ('slug', 'image', 'description')
-
-
-class CategoryListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = ('title')
-
-
-class CategoryProductListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Product
-        exclude = ('slug', 'image', 'description')
+        exclude = ('image', 'description')
