@@ -3,19 +3,21 @@ from .serializers import *
 
 
 class ProductView(ModelViewSet):
+    # Вывод списка товаров
     serializer_class = ProductSerializer
     queryset = Product.objects.filter(available=True)
 
 
 class CategoryView(ModelViewSet):
+    # Вывод списка категорий товаров
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
 
 class CategoryProductView(ModelViewSet):
+    # Вывод списка товаров определенной категории
     serializer_class = ProductSerializer
 
     def get_queryset(self):
         return Product.objects.filter(category_id=self.kwargs['category_id'], available=True)\
             .select_related('category')
-    
