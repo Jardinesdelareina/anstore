@@ -9,6 +9,7 @@ class Category(models.Model):
 
     class Meta:
         ordering = ['title']
+        index_together = (('id', 'slug'),)
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
@@ -31,6 +32,7 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['title']
+        index_together = (('id', 'slug'),)
         verbose_name = 'Товар'
         verbose_name_plural = 'Товары'
 

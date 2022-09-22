@@ -14,6 +14,7 @@ class CategoryView(ModelViewSet):
     # Вывод списка категорий товаров
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
+    lookup_field = 'slug'
 
 
 class CategoryProductView(ModelViewSet):
