@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from .serializers import *
 
@@ -5,7 +6,8 @@ from .serializers import *
 class ProductView(ModelViewSet):
     # Вывод списка товаров
     serializer_class = ProductSerializer
-    queryset = Product.objects.filter(available=True)
+    queryset = Product.objects.filter(available=True).select_related('category')
+    lookup_field = 'slug'
 
 
 class CategoryView(ModelViewSet):
@@ -17,7 +19,9 @@ class CategoryView(ModelViewSet):
 class CategoryProductView(ModelViewSet):
     # Вывод списка товаров определенной категории
     serializer_class = ProductSerializer
+    lookup_field = 'slug'
 
-    def get_queryset(self):
-        return Product.objects.filter(category_id=self.kwargs['category_id'], available=True)\
-            .select_related('category')
+    def get_queryset(self):   
+        category = get_object_or_404(Category, slug__iexact=self.kwargs.get('slug'))
+        queryset = category.product.all()
+        return queryset

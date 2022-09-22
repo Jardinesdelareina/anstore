@@ -6,6 +6,7 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ('__all__')
+        lookup_field = 'slug'
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -13,3 +14,4 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         exclude = ('image', 'description')
+        lookup_field = 'slug'
