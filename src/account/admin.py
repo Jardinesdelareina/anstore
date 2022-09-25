@@ -1,13 +1,9 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from .models import *
 
 
-class AnstoreUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'phone', 'gender', 'birthday')
-
-    class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
-        ordering = ['username']
+class AnstoreUserAdmin(UserAdmin):
+    list_display = ('username', 'email', 'phone', 'gender', 'created_at')
 
 admin.site.register(AnstoreUser, AnstoreUserAdmin)

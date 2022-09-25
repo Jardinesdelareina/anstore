@@ -138,10 +138,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
 }
-
-
-# Google OAuth2
-# https://pypi.org/project/drf-social-auth/
-GOOGLE_CLIENT_ID = env('GOOGLE_OAUTH2_KEY')
-GOOGLE_CLIENT_SECRET = env('GOOGLE_OAUTH2_SECRET')
-GOOGLE_REDIRECT_URI = '/'
