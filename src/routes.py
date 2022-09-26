@@ -8,7 +8,7 @@ schema_view = get_schema_view(
    openapi.Info(
       title="Anstore API",
       default_version='v1',
-      description="Docs",
+      description="API интернет-магазина на Django REST Framework",
    ),
    public=True,
    permission_classes=(permissions.AllowAny,),
@@ -17,6 +17,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
    path('', include('src.product.urls')),
+   path('account/', include('src.account.urls')),
 
    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

@@ -3,20 +3,20 @@ from rest_framework.viewsets import ModelViewSet
 from .serializers import *
 
 
-class ProductView(ModelViewSet):
+class ProductViewSet(ModelViewSet):
     # Вывод списка товаров
     serializer_class = ProductSerializer
     queryset = Product.objects.filter(available=True).select_related('category')
     lookup_field = 'slug'
 
 
-class CategoryView(ModelViewSet):
+class CategoryViewSet(ModelViewSet):
     # Вывод списка категорий товаров
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
 
-class CategoryProductView(ModelViewSet):
+class CategoryProductViewSet(ModelViewSet):
     # Вывод списка товаров определенной категории
     serializer_class = ProductSerializer
     lookup_field = 'slug'

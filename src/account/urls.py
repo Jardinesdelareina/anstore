@@ -1,6 +1,10 @@
 from django.urls import path
-from .endpoints.auth_views import google_auth
+from .views import AnstoreUserViewSet
 
 urlpatterns = [
-    path('', google_auth)
+    path('<int:pk>', AnstoreUserViewSet.as_view({
+        'get': 'retrieve', 
+        'put': 'update', 
+        'delete': 'destroy'
+    })),
 ]
