@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from .managers import AnstoreUserManager
-from .services import get_path_upload_avatar, validate_size_avatar
+from .utils import get_path_upload_avatar, validate_size_avatar
 
 class AnstoreUser(AbstractBaseUser, PermissionsMixin):
     # Кастомная модель пользователя
