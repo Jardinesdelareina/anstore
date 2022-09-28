@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     
+    'src.account',
     'src.product',
 ]
 
@@ -126,4 +127,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'account.AnstoreUser'
+#AUTH_USER_MODEL = 'account.AnstoreUser'
