@@ -14,8 +14,6 @@ class AnstoreUser(AbstractUser):
     )
     email = models.EmailField('Электронная почта', unique=True)
     phone = models.CharField('Номер телефона', max_length=11, unique=True)
-    first_name = models.CharField('Имя', max_length=50)
-    last_name = models.CharField('Фамилия', max_length=100)
     gender = models.CharField('Пол', max_length=7, choices=GENDER)
     avatar = models.ImageField(
         'Аватар', 
@@ -25,7 +23,6 @@ class AnstoreUser(AbstractUser):
         validators=[FileExtensionValidator(allowed_extensions=['jpg']), validate_size_avatar]
     )
     birthday = models.DateField('День рождения', blank=True, null=True)
-
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
