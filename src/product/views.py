@@ -23,5 +23,5 @@ class CategoryProductViewSet(ModelViewSet):
 
     def get_queryset(self):   
         category = get_object_or_404(Category, slug__iexact=self.kwargs.get('slug'))
-        queryset = category.product.all()
+        queryset = category.product.filter(available=True)
         return queryset

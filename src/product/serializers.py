@@ -13,5 +13,5 @@ class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer()
     class Meta:
         model = Product
-        exclude = ('image', 'description')
+        exclude = ('image', 'description', 'available')
         lookup_field = 'slug'
