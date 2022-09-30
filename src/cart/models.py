@@ -7,7 +7,7 @@ class Cart(models.Model):
     # Модель корзины покупок пользователя
     user = models.ForeignKey(AnstoreUser, on_delete=models.CASCADE)
     products = models.ForeignKey(Product, on_delete=models.PROTECT)
-    amount = models.PositiveIntegerField(default=0)
+    amount = models.PositiveIntegerField('Количество', default=0)
 
     class Meta:
         verbose_name = 'Корзина'
