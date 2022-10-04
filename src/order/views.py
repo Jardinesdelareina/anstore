@@ -10,7 +10,7 @@ class OrderViewSet(ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Order.objects.filter(user=self.request.user)
+        return Order.objects.filter(user=self.request.user.id)
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
@@ -19,7 +19,7 @@ class OrderViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         order = serializer.save()
-        carts = Cart.objects.filter(user=self.request.user)
+        carts = Cart.objects.filter(user=self.request.user.id)
         for cart in carts:
             order_products = OrderDetails()
             order_products.product = cart.product
