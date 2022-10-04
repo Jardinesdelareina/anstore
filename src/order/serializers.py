@@ -30,10 +30,16 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('__all__')
+        fields = '__all__'
 
 
-class OrderDetailsSerializers(serializers.ModelSerializer):
+class OrderDetailsSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=False)
     model = OrderDetails
-    fields = ('__all__')
+    fields = '__all__'
+
+
+class OrderProductsSerializer(serializers.ModelSerializer):
+    products = OrderDetailsSerializer(many=True)
+    model = Order
+    fields = '__all__'
