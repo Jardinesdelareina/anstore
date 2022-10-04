@@ -1,4 +1,5 @@
 from django.db import models
+from ..product.models import Product
 from ..account.models import AnstoreUser
 
 
@@ -29,4 +30,19 @@ class Order(models.Model):
         ordering = ['-order_time']
 
     def __str__(self):
-        return self.order_number
+        return str(self.order_number)
+
+
+class OrderDetails(models.Model):
+    # Модель деталей заказа
+    order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='order_product')
+    product = models.ForeignKey(Product, on_delete=models.PROTECT)
+    amount = models.PositiveIntegerField('Количество', default=0)
+    adding_time = models.DateTimeField('Время добавления', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Позиция заказа'
+        verbose_name_plural = 'Позиции заказа'
+
+    def __str__(self):
+        return str(self.order.order_number)
