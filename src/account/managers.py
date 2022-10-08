@@ -16,7 +16,7 @@ class AnstoreUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email, password, **extra_fields):
-        # Сознание и сохранение администратора
+        # Создание и сохранение администратора
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
