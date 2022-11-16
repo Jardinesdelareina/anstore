@@ -3,6 +3,7 @@ from .models import *
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    # Категории товаров
     class Meta:
         model = Category
         fields = '__all__'
@@ -10,8 +11,9 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    # Товар
     category = CategorySerializer()
     class Meta:
         model = Product
-        exclude = ('image', 'description', 'available')
+        fields = '__all__'
         lookup_field = 'slug'

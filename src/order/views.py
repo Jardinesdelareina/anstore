@@ -6,6 +6,7 @@ from .serializers import OrderDetailsSerializer, OrderSerializer
 
 
 class OrderViewSet(ModelViewSet):
+    # Вывод информации о заказе
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
 

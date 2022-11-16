@@ -1,13 +1,25 @@
 from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
-from .serializers import *
+from rest_framework.generics import ListAPIView
+from rest_framework import permissions, filters
+from .serializers import ProductSerializer, CategorySerializer
+from .models import Product, Category
 
 
 class ProductViewSet(ModelViewSet):
-    # Вывод списка товаров
+    # Вывод товара
     serializer_class = ProductSerializer
     queryset = Product.objects.filter(available=True).select_related('category')
     lookup_field = 'slug'
+
+
+class SearchProductList(ListAPIView):
+    # Вывод результатов поиска
+    queryset = Product.objects.filter(is_published=True)
+    serializer_class = ProductSerializer
+    permission_classes = [permissions.AllowAny]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['title',]
 
 
 class CategoryViewSet(ModelViewSet):
