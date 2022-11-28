@@ -1,10 +1,7 @@
 from django.urls import path
-from .views import OrderViewSet
+from .views import OrderView
 
 urlpatterns = [
-    path('<int:pk>', OrderViewSet.as_view({
-        'get': 'list',
-        'post': 'create',
-        'delete': 'destroy',
-    }))
+    path('<int:pk>', OrderView.as_view({'get': 'list', 'delete': 'destroy'})),
+    path('create', OrderView.as_view({'post': 'create'}))
 ]

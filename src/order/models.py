@@ -16,8 +16,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
     order_number = models.PositiveIntegerField('Номер заказа', unique=True)
     order_status = models.CharField('Статус заказа', choices=STATUS, default='PAID', max_length=11)
-    order_description = models.CharField('Описание заказа', max_length=1000)
-    order_price = models.FloatField('Сумма к оплате', default=0.0)
+    order_description = models.CharField('Описание заказа', max_length=1000, blank=True)
     order_time = models.DateTimeField('Время заказа', auto_now_add=True)
 
     signer_firstname = models.CharField('Фамилия заказчика', max_length=50)
@@ -33,12 +32,16 @@ class Order(models.Model):
     def __str__(self):
         return str(self.order_number)
 
+    def get_total_price(self):
+        return sum(item.get_price() for item in self.items.all())
+
 
 class OrderDetails(models.Model):
     # Модель деталей заказа
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='order_product')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     amount = models.PositiveIntegerField('Количество', default=0)
+    price = models.FloatField('Сумма к оплате', default=0.0)
     adding_time = models.DateTimeField('Время добавления', auto_now_add=True)
 
     class Meta:
@@ -47,3 +50,6 @@ class OrderDetails(models.Model):
 
     def __str__(self):
         return str(self.order.order_number)
+
+    def get_price(self):
+        return self.price * self.amount

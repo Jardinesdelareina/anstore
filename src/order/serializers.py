@@ -34,12 +34,14 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderDetailsSerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=False)
-    model = OrderDetails
-    fields = '__all__'
+    class Meta:
+        product = ProductSerializer(many=False)
+        model = OrderDetails
+        fields = '__all__'
 
 
 class OrderProductsSerializer(serializers.ModelSerializer):
-    products = OrderDetailsSerializer(many=True)
-    model = Order
-    fields = '__all__'
+    class Meta:
+        product = OrderDetailsSerializer(many=True)
+        model = Order
+        fields = '__all__'

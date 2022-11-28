@@ -1,12 +1,13 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import permissions
+from rest_framework import permissions, parsers
 from ..cart.models import Cart
 from .models import Order, OrderDetails
 from .serializers import OrderDetailsSerializer, OrderSerializer
 
 
-class OrderViewSet(ModelViewSet):
+class OrderView(ModelViewSet):
     # Вывод информации о заказе
+    parser_classes = (parsers.MultiPartParser,)
     serializer_class = OrderSerializer
     permission_classes = [permissions.IsAuthenticated]
 
