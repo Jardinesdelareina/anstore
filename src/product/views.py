@@ -15,7 +15,7 @@ class ProductViewSet(ModelViewSet):
 
 class SearchProductList(ListAPIView):
     # Вывод результатов поиска
-    queryset = Product.objects.filter(is_published=True)
+    queryset = Product.objects.filter(available=True)
     serializer_class = ProductSerializer
     permission_classes = [permissions.AllowAny]
     filter_backends = [filters.SearchFilter]

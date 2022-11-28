@@ -1,12 +1,14 @@
 from rest_framework import serializers
-from .models import AnstoreUser
+from .models import CustomUser
 
 
-class AnstoreUserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = AnstoreUser
-        exclude = (
-            'password', 
-            'groups', 
-            'user_permissions'
+        model = CustomUser
+        fields = (
+            'id',
+            'email',
+            'phone',
+            'first_name',
+            'last_name',
         )

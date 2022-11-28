@@ -1,11 +1,11 @@
 from django.db import models
-from ..account.models import AnstoreUser
+from django.conf import settings
 from ..product.models import Product
 
 
 class Cart(models.Model):
     # Модель корзины покупок пользователя
-    user = models.ForeignKey(AnstoreUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='carts')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     amount = models.PositiveIntegerField('Количество', default=0)
 

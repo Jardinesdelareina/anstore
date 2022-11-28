@@ -1,13 +1,14 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import permissions
-from .serializers import AnstoreUserSerializer
-from .models import AnstoreUser
+from rest_framework import permissions, parsers
+from .serializers import CustomUserSerializer
+from .models import CustomUser
 
 
-class AnstorUserViewSet(ModelViewSet):
+class CustomUserView(ModelViewSet):
     # Вывод профиля авторизованного пользователя
-    serializer_class = AnstoreUserSerializer
+    parser_classes = (parsers.MultiPartParser,)
+    serializer_class = CustomUserSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return AnstoreUser.objects.filter(id=self.request.user.id)
+        return CustomUser.objects.filter(id=self.request.user.id)

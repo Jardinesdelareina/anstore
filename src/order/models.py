@@ -1,6 +1,6 @@
 from django.db import models
+from django.conf import settings
 from ..product.models import Product
-from ..account.models import AnstoreUser
 
 
 class Order(models.Model):
@@ -12,7 +12,8 @@ class Order(models.Model):
         ('FINISHED', 'Окончание транзакции'),
         ('PAID', 'Оплачивается'),
     )
-    user = models.ForeignKey(AnstoreUser, on_delete=models.CASCADE)
+    
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
     order_number = models.PositiveIntegerField('Номер заказа', unique=True)
     order_status = models.CharField('Статус заказа', choices=STATUS, default='PAID', max_length=11)
     order_description = models.CharField('Описание заказа', max_length=1000)

@@ -1,17 +1,17 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
-from .models import AnstoreUser
+from .models import CustomUser
 
 
-@admin.register(AnstoreUser)
-class AnstoreUserAdmin(UserAdmin):
+@admin.register(CustomUser)
+class CustomUserAdmin(UserAdmin):
     list_display = ('id', 'email', 'phone', 'is_active')
     list_display_links = ('email',)
     fieldsets = (
         (None, {'fields': ('email', 'password', 'phone')}),
-        (_('Personal info'), {'fields': ('last_name', 'first_name')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Permissions'), {'fields': ('is_staff', 'is_active')}),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('first_name', 'last_name')
+    ordering = ('-date_joined',)

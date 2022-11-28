@@ -1,7 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager
 
 
-class AnstoreUserManager(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     # Диспетчер кастомной модели пользователя с уникальным идентификатором email
 
     def create_user(self, email, password, **extra_fields):
