@@ -20,11 +20,15 @@ class Category(models.Model):
         return self.title
 
 
+def get_path_product_image(instance, file):
+    # Построение пути к файлу image
+    return f'products/{instance.slug}/{file}'
+
 class Product(models.Model):
     # Модель товара
     title = models.CharField('Название', max_length=100, db_index=True)
     slug = models.SlugField(max_length=150, unique=True)
-    image = models.ImageField('Изображение', upload_to='product/image/', blank=True)
+    image = models.ImageField('Изображение', upload_to=get_path_product_image, blank=True)
     description = models.TextField('Описание', max_length=1000, blank=True)
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
     available = models.BooleanField('Наличие', default=True)

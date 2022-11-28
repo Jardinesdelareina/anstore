@@ -6,7 +6,7 @@ from .serializers import ProductSerializer, CategorySerializer
 from .models import Product, Category
 
 
-class ProductViewSet(ModelViewSet):
+class ProductView(ModelViewSet):
     # Вывод товара
     serializer_class = ProductSerializer
     queryset = Product.objects.filter(available=True).select_related('category')
@@ -22,13 +22,13 @@ class SearchProductList(ListAPIView):
     search_fields = ['title',]
 
 
-class CategoryViewSet(ModelViewSet):
+class CategoryView(ModelViewSet):
     # Вывод списка категорий товаров
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
 
-class CategoryProductViewSet(ModelViewSet):
+class CategoryProductView(ModelViewSet):
     # Вывод списка товаров определенной категории
     serializer_class = ProductSerializer
     lookup_field = 'slug'
