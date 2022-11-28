@@ -1,14 +1,15 @@
 from rest_framework.viewsets import ModelViewSet
-from rest_framework import permissions
+from rest_framework import permissions, parsers
 from .serializers import CartSerializer, CartDetailSerializer
 from .models import Cart
 
 
-class CartViewSet(ModelViewSet):
+class CartView(ModelViewSet):
     # Вывод корзины пользователя
+    parser_classes = (parsers.MultiPartParser,)
     serializer_class = CartSerializer
     permission_classes = [permissions.IsAuthenticated]
-    lookup_field = 'products_id'
+    lookup_field = 'product_id'
 
     def get_serializer_class(self):
         if self.action == 'list':

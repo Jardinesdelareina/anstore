@@ -6,16 +6,16 @@ from .models import Cart
 
 class CartDetailSerializer(serializers.ModelSerializer):
     # Информация о товаре в корзине
-    products = ProductSerializer(many=False, read_only=True)
+    product = ProductSerializer(many=False, read_only=True)
     class Meta:
         model = Cart
-        fields = ('products', 'amount')
+        fields = ('product', 'amount')
 
 
 class CartSerializer(serializers.Serializer):
     # Корзина пользователя
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    products = serializers.PrimaryKeyRelatedField(required=True, queryset=Product.objects.all())
+    product = serializers.PrimaryKeyRelatedField(required=True, queryset=Product.objects.all())
     amount = serializers.IntegerField(
         required=True, 
         label='Количество', 
@@ -28,10 +28,10 @@ class CartSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         user = self.context['request'].user
-        products = validated_data['products']
+        product = validated_data['product']
         amount = validated_data['amount']
 
-        existed = Cart.objects.filter(user=user, products=products)
+        existed = Cart.objects.filter(user=user, product=product)
 
         # Определяет, есть ли в данный момент запись
         if existed:
