@@ -4,17 +4,24 @@ from ..product.models import Product
 from .models import Cart
 
 
-class CartDetailSerializer(serializers.ModelSerializer):
+class CartSerializer(serializers.ModelSerializer):
     # Информация о товаре в корзине
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     product = ProductSerializer(many=False, read_only=True)
+    total_price = serializers.IntegerField(read_only=True)
     class Meta:
         model = Cart
-        fields = ('product', 'amount')
+        fields = (
+            'id',
+            'user',
+            'product', 
+            'amount',
+            'total_price',
+        )
 
 
-class CartSerializer(serializers.Serializer):
+class CartDetailSerializer(serializers.Serializer):
     # Корзина пользователя
-    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     product = serializers.PrimaryKeyRelatedField(required=True, queryset=Product.objects.all())
     amount = serializers.IntegerField(
         required=True, 
@@ -25,6 +32,12 @@ class CartSerializer(serializers.Serializer):
             'required': 'Пожалуйста, выберите количество покупок'
         }
     )
+    class Meta:
+        model = Cart
+        fields = (
+            'product',
+            'amount',
+        )
 
     def create(self, validated_data):
         user = self.context['request'].user
