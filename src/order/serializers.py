@@ -1,9 +1,10 @@
 from rest_framework import serializers
 from ..product.serializers import ProductSerializer
-from .models import Order, OrderDetails
+from .models import Order, OrderDetail
 
 
 class OrderSerializer(serializers.ModelSerializer):
+    # Информация о заказе
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     # Информация, недоступная для изменения пользователем
     order_number = serializers.CharField(read_only=True)
@@ -33,15 +34,10 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class OrderDetailsSerializer(serializers.ModelSerializer):
+class OrderDetailSerializer(serializers.ModelSerializer):
+    # Информация о деталях заказа
+    order = OrderSerializer()
+    product = ProductSerializer(many=False)
     class Meta:
-        product = ProductSerializer(many=False)
-        model = OrderDetails
-        fields = '__all__'
-
-
-class OrderProductsSerializer(serializers.ModelSerializer):
-    class Meta:
-        product = OrderDetailsSerializer(many=True)
-        model = Order
+        model = OrderDetail
         fields = '__all__'

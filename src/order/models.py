@@ -32,17 +32,13 @@ class Order(models.Model):
     def __str__(self):
         return str(self.order_number)
 
-    def get_total_price(self):
-        return sum(item.get_price() for item in self.items.all())
 
-
-class OrderDetails(models.Model):
+class OrderDetail(models.Model):
     # Модель деталей заказа
     order = models.ForeignKey(Order, on_delete=models.PROTECT, related_name='order_product')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     amount = models.PositiveIntegerField('Количество', default=0)
-    price = models.FloatField('Сумма к оплате', default=0.0)
-    adding_time = models.DateTimeField('Время добавления', auto_now_add=True)
+    total_price = models.FloatField('Сумма к оплате', default=0.0)
 
     class Meta:
         verbose_name = 'Позиция заказа'
@@ -50,6 +46,3 @@ class OrderDetails(models.Model):
 
     def __str__(self):
         return str(self.order.order_number)
-
-    def get_price(self):
-        return self.price * self.amount
