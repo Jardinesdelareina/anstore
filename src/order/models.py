@@ -14,7 +14,7 @@ class Order(models.Model):
     )
     
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='orders')
-    #order_number = models.PositiveIntegerField('Номер заказа', unique=True)
+    order_number = models.CharField('Номер заказа', max_length=17, unique=True)
     order_status = models.CharField('Статус заказа', choices=STATUS, default='PAID', max_length=11)
     order_comment = models.CharField('Комментарий к заказу', max_length=1000, blank=True)
     order_time = models.DateTimeField('Время заказа', auto_now_add=True)
@@ -30,7 +30,7 @@ class Order(models.Model):
         ordering = ['-order_time']
 
     def __str__(self):
-        return f'Заказ {self.id}'
+        return f'Заказ {self.order_number}'
 
     def to_pay(self):
         return sum(item.total_price() for item in self.order_items.all())

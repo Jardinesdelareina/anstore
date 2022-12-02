@@ -19,12 +19,12 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     # Сериализация информации о заказе
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    #order_number = serializers.SerializerMethodField()
+    order_number = serializers.CharField(read_only=True)
     order_status = serializers.CharField(read_only=True)
     order_time = serializers.CharField(read_only=True)
     order_items = OrderItemSerializer(many=True, read_only=True)
 
-    """ def get_order_number(self):
+    def generate_order_number(self):
         # Создание номера заказа
         # Текущее время + id пользователя + рандомное число
         from time import strftime
@@ -36,13 +36,18 @@ class OrderSerializer(serializers.ModelSerializer):
             user_id=self.context['request'].user.id,
             random_int=random_number.randint(10, 99)
         )
-        return str(order_number) """
+        return order_number
+
+    def validate(self, attrs):
+        attrs['order_number'] = self.generate_order_number()
+        return attrs
 
     class Meta:
         model = Order
         fields = (
             'id',
             'user',
+            'order_number',
             'order_status',
             'order_comment',
             'order_time',
@@ -56,14 +61,15 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderListSerializer(serializers.ModelSerializer):
-    # Сериализация нформации о заказах в списке
-    #order_number = serializers.CharField(read_only=True)
+    # Сериализация информации о заказах в списке
+    order_number = serializers.CharField(read_only=True)
     order_status = serializers.CharField(read_only=True)
     order_time = serializers.CharField(read_only=True)
     class Meta:
         model = Order
         fields = (
             'id',
+            'order_number',
             'order_time',
             'order_status',
             'to_pay',
