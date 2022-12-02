@@ -2,7 +2,6 @@ from django.shortcuts import get_object_or_404
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.generics import ListAPIView
 from rest_framework import permissions, filters
-from django.db.models import Q
 from .serializers import ProductSerializer, CategorySerializer
 from .models import Product, Category
 

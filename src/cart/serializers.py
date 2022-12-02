@@ -5,10 +5,9 @@ from .models import Cart
 
 
 class CartSerializer(serializers.ModelSerializer):
-    # Информация о товаре в корзине
+    # Сериализация информации о товаре в корзине
     user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     product = ProductSerializer(many=False, read_only=True)
-    total_price = serializers.IntegerField(read_only=True)
     class Meta:
         model = Cart
         fields = (
@@ -21,7 +20,8 @@ class CartSerializer(serializers.ModelSerializer):
 
 
 class CartDetailSerializer(serializers.Serializer):
-    # Корзина пользователя
+    # Сериализация корзины пользователя
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
     product = serializers.PrimaryKeyRelatedField(required=True, queryset=Product.objects.all())
     amount = serializers.IntegerField(
         required=True, 
@@ -35,6 +35,7 @@ class CartDetailSerializer(serializers.Serializer):
     class Meta:
         model = Cart
         fields = (
+            'user',
             'product',
             'amount',
         )

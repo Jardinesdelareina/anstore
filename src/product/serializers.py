@@ -3,7 +3,7 @@ from .models import Category, Product
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    # Категории товаров
+    # Сериализация категорий товаров
     class Meta:
         model = Category
         fields = '__all__'
@@ -11,9 +11,20 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    # Товар
+    # Сериализация информации о товаре
     category = CategorySerializer()
+    price = serializers.FloatField(read_only=True)
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = (
+            'id',
+            'title',
+            'slug',
+            'image',
+            'description',
+            'price',
+            'available',
+            'created_at',
+            'category',
+        )
         lookup_field = 'slug'

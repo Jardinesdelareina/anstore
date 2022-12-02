@@ -30,10 +30,9 @@ class Product(models.Model):
     slug = models.SlugField(max_length=150, unique=True)
     image = models.ImageField('Изображение', upload_to=get_path_product_image, blank=True)
     description = models.TextField('Описание', max_length=1000, blank=True)
-    price = models.DecimalField('Цена', max_digits=10, decimal_places=2)
+    price = models.FloatField('Цена')
     available = models.BooleanField('Наличие', default=True)
     created_at = models.DateTimeField('Добавлено', auto_now_add=True)
-    updated_at = models.DateTimeField('Изменено', auto_now=True)
     category = models.ForeignKey(Category, related_name='product', on_delete=models.PROTECT)
 
     class Meta:

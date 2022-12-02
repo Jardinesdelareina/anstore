@@ -4,11 +4,10 @@ from ..product.models import Product
 
 
 class Cart(models.Model):
-    # Модель корзины покупок пользователя
+    # Модель товара в корзине покупок пользователя
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='carts')
     product = models.ForeignKey(Product, on_delete=models.PROTECT)
     amount = models.PositiveIntegerField('Количество', default=0)
-    total_price = models.PositiveIntegerField('Общая цена', default=0.0)
 
     class Meta:
         verbose_name = 'Корзина'
@@ -16,8 +15,8 @@ class Cart(models.Model):
         unique_together = ('user', 'product')
 
     def __str__(self):
-        return '%s(%d)'.format(self.product.title, self.amount)
+        return f'Корзина покупок {self.user.email}'
 
-    def save(self, *args, **kwargs):
-        self.total_price = self.amount * self.product.price
-        super().save(*args, **kwargs)
+    def total_price(self) -> float:
+        return self.amount * self.product.price
+        
