@@ -7,7 +7,6 @@ class CustomUser(AbstractUser):
     # Кастомная модель пользователя
     username = None
     email = models.EmailField('Электронная почта', unique=True)
-    phone = models.CharField('Номер телефона', max_length=11, unique=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -1,11 +1,31 @@
 from django.db import models
 from django.urls import reverse
+from mptt.models import MPTTModel, TreeForeignKey
+from mptt.managers import TreeManager
 
 
-class Category(models.Model):
+class CategoryManager(TreeManager):
+    def viewable(self):
+        queryset = self.get_queryset().filter(level=0)
+        return queryset
+
+
+class Category(MPTTModel):
     # Модель категории товаров
     title = models.CharField('Категория', max_length=70, db_index=True)
+    parent = TreeForeignKey(
+        'self',
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name='children'
+    )
     slug = models.SlugField(max_length=150, unique=True)
+
+    objects = CategoryManager()
+
+    class MPTTMeta:
+        order_insertion_by = ['title']
 
     class Meta:
         ordering = ['title']

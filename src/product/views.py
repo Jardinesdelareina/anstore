@@ -25,7 +25,7 @@ class SearchProductList(ListAPIView):
 class CategoryView(ModelViewSet):
     # Вывод списка категорий товаров
     serializer_class = CategorySerializer
-    queryset = Category.objects.all()
+    queryset = Category.objects.viewable()
 
 
 class CategoryProductView(ModelViewSet):

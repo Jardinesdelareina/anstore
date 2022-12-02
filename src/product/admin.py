@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import *
+from mptt.admin import MPTTModelAdmin
+from .models import Product, Category
 
 
 @admin.register(Product)
@@ -10,6 +11,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(MPTTModelAdmin):
     list_display = ('title',)
+    mptt_level_indent = 5
     prepopulated_fields = {'slug': ('title',)}

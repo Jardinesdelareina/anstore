@@ -24,10 +24,6 @@ __pycache__/
 !*media/.gitkeep
 media/*
 
-
-!src/*/migrations/__init__.py
-src/*/migrations/*
-
 log/debug.log
 
 build
